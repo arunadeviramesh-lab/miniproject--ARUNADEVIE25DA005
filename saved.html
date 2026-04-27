@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Saved Lines</title>
+<style>
+body {
+  font-family: Georgia, serif;
+  background: linear-gradient(135deg, #2F2F2F, #6A0DAD);
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+h2 {
+  color: #6A0DAD;
+  margin-bottom: 20px;
+}
+
+.saved-card {
+  margin: 15px auto;
+  padding: 20px;
+  width: 80%;
+  border-radius: 14px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  font-size: 20px;
+  word-wrap: break-word;
+  transition: transform 0.3s;
+}
+
+.saved-card:hover {
+  transform: translateY(-5px);
+}
+
+button {
+  margin: 10px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #6A0DAD;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4B0082;
+}
+
+.empty-message {
+  font-size: 18px;
+  color: #ccc;
+  margin-top: 20px;
+}
+
+.watermark {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  font-family: Georgia, serif;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Your Saved Lines 📚</h2>
+
+<div id="savedContainer"></div>
+
+<button onclick="goBack()">Back to Decorate</button>
+<button onclick="clearAll()">Clear All</button>
+
+<div class="watermark">Developed by Aruna.</div>
+
+<script>
+const container = document.getElementById("savedContainer");
+const saved = JSON.parse(localStorage.getItem("lines")) || [];
+
+if (saved.length === 0) {
+  const msg = document.createElement("p");
+  msg.className = "empty-message";
+  msg.innerText = "No lines saved yet 💭";
+  container.appendChild(msg);
+} else {
+  saved.forEach((item, index) => {
+    const card = document.createElement("div");
+    card.className = "saved-card";
+    card.innerText = item.text;
+    card.style.background = item.color;
+
+    const delBtn = document.createElement("button");
+    delBtn.innerText = "Delete";
+    delBtn.onclick = () => {
+      saved.splice(index, 1);
+      localStorage.setItem("lines", JSON.stringify(saved));
+      location.reload();
+    };
+
+    card.appendChild(document.createElement("br"));
+    card.appendChild(delBtn);
+    container.appendChild(card);
+  });
+}
+
+function goBack() {
+  window.location.href = "decorate.html";
+}
+
+function clearAll() {
+  if (confirm("Clear all saved lines?")) {
+    localStorage.removeItem("lines");
+    location.reload();
+  }
+}
+</script>
+
+</body>
+</html>
