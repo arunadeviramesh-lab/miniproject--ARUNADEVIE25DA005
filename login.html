@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background: linear-gradient(135deg, #4B0082, #2F2F2F);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+    .box {
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      width: 90%; max-width: 300px;
+    }
+    h1 { color: #6A0DAD; }
+    label { display: block; text-align: left; margin-top: 10px; }
+    input {
+      width: 90%; padding: 8px; margin: 8px 0;
+      border-radius: 6px; border: 1px solid #aaa;
+    }
+    button {
+      width: 100%; padding: 10px;
+      border: none; border-radius: 6px;
+      background: #6A0DAD; color: white;
+      font-size: 15px; cursor: pointer;
+    }
+    button:hover { background: #4B0082; }
+
+    .watermark {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+    }
+  </style>
+</head>
+<body>
+  <main class="box">
+    <h1>Login 💜</h1>
+    <label>Email:</label>
+    <input type="email" id="email" placeholder="Enter your email">
+    <label>Password:</label>
+    <input type="password" id="password" placeholder="Enter your password">
+    <button onclick="login()">Login</button>
+  </main>
+
+  <div class="watermark">Developed by Aruna.</div>
+
+  <script>
+    function login() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      if (!email || !password) return alert("Please fill all fields");
+      localStorage.setItem("user", JSON.stringify({ email }));
+      window.location.href = "decorate.html";
+    }
+  </script>
+</body>
+</html>
